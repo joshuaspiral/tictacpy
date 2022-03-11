@@ -8,7 +8,7 @@ def print_board():
             print(j, end=' ')
         print()
 
-def check_for_win(target):
+def check_for_win():
     columns = list(zip(*board))
 
     for i in range(3):
@@ -24,7 +24,6 @@ def check_for_win(target):
         return True
 
 def check_for_draw():
-    all_spots = []
     for i in range(9):
         y = i // 3
         x = i % 3
@@ -42,11 +41,11 @@ def handle_turn(player):
     y, x = (inp - 1)// 3, (inp - 1) % 3
     board[y][x] = player
 
-    if check_for_win(player) == True:
+    if check_for_win() == True:
         print(f"{player} wins.")
         return True
 
-    if check_for_win('O' if player == 'X' else 'X') == True:
+    if check_for_win() == True:
         print(f"{'O' if player == 'X' else 'X'} wins.")
         return True
         
