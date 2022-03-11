@@ -1,3 +1,7 @@
+board = [[x for x in range(3)] for _ in range(3)]
+for i in range(9):
+    board[i // 3][i % 3] = i + 1
+
 def print_board():
     for i in board:
         for j in i:
@@ -7,49 +11,35 @@ def print_board():
 def check_for_win(target):
     columns = list(zip(*board))
 
-    row_win = False
     for i in range(3):
-        if all([True if x == target else False for x in board[i]]):
-            row_win = True
-
+        if board[i][0] == board[i][1] and board[i][1] == board[i][2]: return True
     
-    col_win = False
     for i in range(3):
-        if all([True if x == target else False for x in columns[i]]):
-            col_win = True
+        if columns[i][0] == columns[i][1] and columns[i][1] == columns[i][2]: return True
 
-    left_diag = []
-    for i in range(0, 9, 4):
-        y, x = i // 3, i % 3
-        left_diag.append(True if board[y][x] == target else False)
+    if board[0][0] == board[1][1] and board[1][1] == board[2][2]:
+        return True
 
-    right_diag = []
-    for i in range(2, 8, 2):
-        y, x = i // 3, i % 3
-        right_diag.append(True if board[y][x] == target else False)
-
-    left_diag = all(left_diag)
-    right_diag = all(right_diag)
-
-    return any([left_diag, right_diag, row_win, col_win])
+    if board[0][2] == board[1][1] and board[1][1] == board[2][0]:
+        return True
 
 def check_for_draw():
     all_spots = []
     for i in range(9):
         y = i // 3
         x = i % 3
-        all_spots.append(board[y][x])
+        if board[y][x] == i + 1:
+            return False
 
-    all_spots = [True if x in ['X', 'O'] else False  for x in all_spots]
-    return all(all_spots)
+    return True
 
 def handle_turn(player):
-    print(f"{player}, input your move from 0-8")
+    print(f"{player}, input your move from 1-9")
     print()
     print_board()
     print()
     inp = int(input())
-    y, x = inp // 3, inp % 3
+    y, x = (inp - 1)// 3, (inp - 1) % 3
     board[y][x] = player
 
     if check_for_win(player) == True:
@@ -65,10 +55,6 @@ def handle_turn(player):
         return True
         
     return False
-
-board = [[x for x in range(3)] for _ in range(3)]
-for i in range(1, 9):
-    board[i // 3][i % 3] = i
 
 while True:
     if handle_turn('X'):
