@@ -1,6 +1,4 @@
-board = [[x for x in range(3)] for _ in range(3)]
-for i in range(9):
-    board[i // 3][i % 3] = i + 1
+board = [[' ' for _ in range(3)] for x in range(3)]
 
 def print_board():
     for i in board:
@@ -16,34 +14,36 @@ def check_for_win():
     columns = list(zip(*board))
 
     for i in range(3):
-        if board[i][0] == board[i][1] and board[i][1] == board[i][2]: return True
+        if board[i][0] == board[i][1] and board[i][1] == board[i][2] and board[i][0] != ' ': return True
     
     for i in range(3):
-        if columns[i][0] == columns[i][1] and columns[i][1] == columns[i][2]: return True
+        if columns[i][0] == columns[i][1] and columns[i][1] == columns[i][2] and board[i][0] != ' ': return True
 
-    if board[0][0] == board[1][1] and board[1][1] == board[2][2]:
+    if board[0][0] == board[1][1] and board[1][1] == board[2][2] and board[0][0] != ' ':
         return True
 
-    if board[0][2] == board[1][1] and board[1][1] == board[2][0]:
+    if board[0][2] == board[1][1] and board[1][1] == board[2][0] and board[0][2] != ' ':
         return True
 
 def check_for_draw():
-    for i in range(9):
-        y = i // 3
-        x = i % 3
-        if board[y][x] == i + 1:
-            return False
-
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == ' ':
+                return False
     return True
 
 def handle_turn(player):
-    print(f"{player}, input your move from 1-9")
-    print()
     print_board()
+    print(f"{player}, input the row of your move")
     print()
-    inp = int(input())
-    y, x = (inp - 1)// 3, (inp - 1) % 3
-    board[y][x] = player
+    row = int(input())
+    print(f"{player}, input the column of your move")
+    print()
+    col = int(input())
+    board[row][col] = player
+    print_board()
+    print(row, col)
+    print(board[row][col])
 
     if check_for_win() == True:
         print(f"{player} wins.")
