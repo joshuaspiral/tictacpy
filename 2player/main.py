@@ -19,7 +19,7 @@ def check_for_win():
             return board[i][0]
 
     for i in range(3):
-        if (board[0][i] == board[1][i] and board[1][i] == board[1][i]) and board[0][i] != ' ':
+        if (board[0][i] == board[1][i] and board[1][i] == board[2][i]) and board[0][i] != ' ':
             print('col win')
             return board[0][i]
 
