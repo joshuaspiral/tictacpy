@@ -4,9 +4,13 @@ for i in range(9):
 
 def print_board():
     for i in board:
+        print('-'*13)
         for j in i:
+            print('|', end=' ')
             print(j, end=' ')
+        print('|', end='')
         print()
+    print('-'*13)
 
 def check_for_win():
     columns = list(zip(*board))
