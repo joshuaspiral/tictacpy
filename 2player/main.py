@@ -11,19 +11,26 @@ def print_board():
     print('-'*13)
 
 def check_for_win():
-    columns = list(zip(*board))
+    print('checking')
 
     for i in range(3):
-        if board[i][0] == board[i][1] and board[i][1] == board[i][2] and board[i][0] != ' ': return True
-    
+        if (board[i][0] == board[i][1] and board[i][1] == board[i][2]) and board[i][0] != ' ':
+            print('row win')
+            return board[i][0]
+
     for i in range(3):
-        if columns[i][0] == columns[i][1] and columns[i][1] == columns[i][2] and board[i][0] != ' ': return True
+        if (board[0][i] == board[1][i] and board[1][i] == board[1][i]) and board[0][i] != ' ':
+            print('col win')
+            return board[0][i]
 
-    if board[0][0] == board[1][1] and board[1][1] == board[2][2] and board[0][0] != ' ':
-        return True
+    if (board[0][0] == board[1][1] and board[1][1] == board[2][2]) and board[0][0] != ' ':
+        print('primary diag win')
+        return board[0][0]
 
-    if board[0][2] == board[1][1] and board[1][1] == board[2][0] and board[0][2] != ' ':
-        return True
+    if (board[0][2] == board[1][1] and board[1][1] == board[2][0]) and board[0][2] != ' ':
+        print('secondary diag win')
+        return board[0][2]
+
 
 def check_for_draw():
     for i in range(3):
@@ -34,33 +41,33 @@ def check_for_draw():
 
 def handle_turn(player):
     print_board()
-    print(f"{player}, input the row of your move")
+    print(f"{player}, input the row and column of your move in this format: `row col`")
     print()
-    row = int(input())
-    print(f"{player}, input the column of your move")
-    print()
-    col = int(input())
+    inp = input().split()
+    row, col = int(inp[0]), int(inp[1])
     board[row][col] = player
     print_board()
     print(row, col)
     print(board[row][col])
 
-    if check_for_win() == True:
-        print(f"{player} wins.")
+    winner = check_for_win()
+    if winner == 'X':
+        print("X wins.")
+        return True
+    elif winner == 'O':
+        print("O wins.")
         return True
 
-    if check_for_win() == True:
-        print(f"{'O' if player == 'X' else 'X'} wins.")
-        return True
-        
     if check_for_draw():
         print("DRAW")
         return True
-        
+
     return False
 
 while True:
     if handle_turn('X'):
+        print_board()
         break
     if handle_turn('O'):
+        print_board()
         break
